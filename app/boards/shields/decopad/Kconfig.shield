@@ -1,0 +1,8 @@
+# Copyright (c) 2020 Derek Schmell
+# SPDX-License-Identifier: MIT
+
+config SHIELD_DECOPAD_LEFT
+	def_bool $(shields_list_contains,decopad_left)
+
+config SHIELD_DECOPAD_RIGHT
+	def_bool $(shields_list_contains,decopad_right)
