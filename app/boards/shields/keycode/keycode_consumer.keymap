@@ -10,7 +10,7 @@
         label = "Default keymap";
         layer_0 {
             bindings = <
-                &out OUT_BLE
+                &tog 2
                 &kp A
                 &kp B
                 &kp C
@@ -431,6 +431,7 @@
         layer_2 {
             bindings = <
                 &tog 0
+                &out OUT_USB
                 &kp C_RESET
                 &kp C_SLEEP
                 &kp C_SLEEP_MODE
@@ -649,6 +650,7 @@
                 &kp C_KBIA_ACCEPT
                 &kp C_KEYBOARD_INPUT_ASSIST_CANCEL
                 &kp C_KBIA_CANCEL
+                
             >;
         };
     };
@@ -656,12 +658,11 @@
 
 &kscan {
     events = < 
-        ZMK_MOCK_PRESS(0, 0, 50)
-        ZMK_MOCK_RELEASE(0, 0, 10000)
-        ZMK_MOCK_PRESS(1, 0, 50)
-        ZMK_MOCK_RELEASE(1, 0, 100)
-        ZMK_MOCK_PRESS(1, 0, 50)
-        ZMK_MOCK_RELEASE(1, 0, 100)
+
+        ZMK_MOCK_PRESS(0, 0, 10)
+        ZMK_MOCK_RELEASE(0, 0, 10)
+        ZMK_MOCK_PRESS(1, 0, 10)
+        ZMK_MOCK_RELEASE(1, 0, 10000)
         ZMK_MOCK_PRESS(2, 0, 50)
         ZMK_MOCK_RELEASE(2, 0, 100)
         ZMK_MOCK_PRESS(3, 0, 50)
@@ -1098,68 +1099,6 @@
         ZMK_MOCK_RELEASE(218, 0, 100)
         ZMK_MOCK_PRESS(219, 0, 50)
         ZMK_MOCK_RELEASE(219, 0, 100)
-        ZMK_MOCK_PRESS(220, 0, 50)
-        ZMK_MOCK_RELEASE(220, 0, 100)
-        ZMK_MOCK_PRESS(221, 0, 50)
-        ZMK_MOCK_RELEASE(221, 0, 100)
-        ZMK_MOCK_PRESS(222, 0, 50)
-        ZMK_MOCK_RELEASE(222, 0, 100)
-        ZMK_MOCK_PRESS(223, 0, 50)
-        ZMK_MOCK_RELEASE(223, 0, 100)
-        ZMK_MOCK_PRESS(224, 0, 50)
-        ZMK_MOCK_RELEASE(224, 0, 100)
-        ZMK_MOCK_PRESS(225, 0, 50)
-        ZMK_MOCK_RELEASE(225, 0, 100)
-        ZMK_MOCK_PRESS(226, 0, 50)
-        ZMK_MOCK_RELEASE(226, 0, 100)
-        ZMK_MOCK_PRESS(227, 0, 50)
-        ZMK_MOCK_RELEASE(227, 0, 100)
-        ZMK_MOCK_PRESS(228, 0, 50)
-        ZMK_MOCK_RELEASE(228, 0, 100)
-        ZMK_MOCK_PRESS(229, 0, 50)
-        ZMK_MOCK_RELEASE(229, 0, 100)
-        ZMK_MOCK_PRESS(230, 0, 50)
-        ZMK_MOCK_RELEASE(230, 0, 100)
-        ZMK_MOCK_PRESS(231, 0, 50)
-        ZMK_MOCK_RELEASE(231, 0, 100)
-        ZMK_MOCK_PRESS(232, 0, 50)
-        ZMK_MOCK_RELEASE(232, 0, 100)
-        ZMK_MOCK_PRESS(233, 0, 50)
-        ZMK_MOCK_RELEASE(233, 0, 100)
-        ZMK_MOCK_PRESS(234, 0, 50)
-        ZMK_MOCK_RELEASE(234, 0, 100)
-        ZMK_MOCK_PRESS(235, 0, 50)
-        ZMK_MOCK_RELEASE(235, 0, 100)
-        ZMK_MOCK_PRESS(236, 0, 50)
-        ZMK_MOCK_RELEASE(236, 0, 100)
-        ZMK_MOCK_PRESS(237, 0, 50)
-        ZMK_MOCK_RELEASE(237, 0, 100)
-        ZMK_MOCK_PRESS(238, 0, 50)
-        ZMK_MOCK_RELEASE(238, 0, 100)
-        ZMK_MOCK_PRESS(239, 0, 50)
-        ZMK_MOCK_RELEASE(239, 0, 100)
-        ZMK_MOCK_PRESS(240, 0, 50)
-        ZMK_MOCK_RELEASE(240, 0, 100)
-        ZMK_MOCK_PRESS(241, 0, 50)
-        ZMK_MOCK_RELEASE(241, 0, 100)
-        ZMK_MOCK_PRESS(242, 0, 50)
-        ZMK_MOCK_RELEASE(242, 0, 100)
-        ZMK_MOCK_PRESS(243, 0, 50)
-        ZMK_MOCK_RELEASE(243, 0, 100)
-        ZMK_MOCK_PRESS(244, 0, 50)
-        ZMK_MOCK_RELEASE(244, 0, 100)
-        ZMK_MOCK_PRESS(245, 0, 50)
-        ZMK_MOCK_RELEASE(245, 0, 100)
-        ZMK_MOCK_PRESS(246, 0, 50)
-        ZMK_MOCK_RELEASE(246, 0, 100)
-        ZMK_MOCK_PRESS(247, 0, 50)
-        ZMK_MOCK_RELEASE(247, 0, 100)
-        ZMK_MOCK_PRESS(248, 0, 50)
-        ZMK_MOCK_RELEASE(248, 0, 100)
-        ZMK_MOCK_PRESS(249, 0, 50)
-        ZMK_MOCK_RELEASE(249, 0, 100)
-        ZMK_MOCK_PRESS(250, 0, 50)
-        ZMK_MOCK_RELEASE(250, 0, 100)
         
     >;
 };
