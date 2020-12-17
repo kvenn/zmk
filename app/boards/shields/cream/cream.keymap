@@ -31,9 +31,9 @@
 		lower_layer {
 			bindings = <
 &kp TILDE   &kp EXCLAMATION     &kp AT     &kp HASH     &kp DOLLAR     &kp PERCENT          &kp CARET  &kp AMPERSAND  &kp ASTERISK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp DELETE
-&trans    &trans    &trans    &trans    &trans    &trans                                    &trans    &kp UNDERSCORE &kp PLUS  &kp LEFT_BRACE  &kp RIGHT_BRACE  &kp PIPE
+&trans    &kp LA(TAB)    &trans    &trans    &trans    &trans                                    &trans    &kp UNDERSCORE &kp PLUS  &kp LEFT_BRACE  &kp RIGHT_BRACE  &kp PIPE
 &trans    &trans    &trans    &trans    &kp LA(LG(SLASH))    &trans                                    &trans   &trans   &trans    &trans    &trans    &trans
-&kp CAPSLOCK    &kp C_POWER    &out OUT_USB    &bt BT_CLR  &trans  &trans                                    &trans   &trans   &trans    &trans    &trans    &trans    
+&kp CAPSLOCK    &kp K_APPLICATION    &out OUT_BLE    &bt BT_CLR  &trans  &trans                                    &trans   &trans   &trans    &trans    &trans    &trans    
 			>;
 		};
 
@@ -42,7 +42,7 @@
 &kp GRAVE &kp NUMBER_1 &kp NUMBER_2 &kp NUMBER_3 &kp NUMBER_4 &kp NUMBER_5                  &kp NUMBER_6 &kp NUMBER_7 &kp NUMBER_8 &kp NUMBER_9 &kp NUMBER_0 &kp DELETE
 &trans   &trans   &trans    &trans    &trans    &trans                      &trans    &kp MINUS &kp EQUAL   &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp BACKSLASH
 &trans   &trans   &trans    &trans    &trans    &trans       			    &trans    &trans   &trans    &trans    &trans    &trans
-&trans   &trans   &trans    &trans    &trans    &trans                      &trans    &trans   &trans    &trans    &trans    &trans
+&trans   &trans   &trans    &trans    &trans    &trans                      &trans    &trans   &trans    &trans    &trans    &kp M_NEXT
 			>;
 		};
 	};
