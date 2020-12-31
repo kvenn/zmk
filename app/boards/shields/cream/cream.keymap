@@ -31,8 +31,8 @@
 		lower_layer {
 			bindings = <
 &kp TILDE   &kp EXCLAMATION     &kp AT     &kp HASH     &kp DOLLAR     &kp PERCENT          &kp CARET  &kp AMPERSAND  &kp ASTERISK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp DELETE
-&trans    &kp LA(TAB)    &trans    &trans    &trans    &trans                                    &trans    &kp UNDERSCORE &kp PLUS  &kp LEFT_BRACE  &kp RIGHT_BRACE  &kp PIPE
-&trans    &trans    &trans    &trans    &kp LA(LG(SLASH))    &trans                                    &trans   &trans   &trans    &trans    &trans    &trans
+&trans    &kp LG(GRAVE)    &trans    &trans    &trans    &trans                                    &trans    &kp UNDERSCORE &kp PLUS  &kp LEFT_BRACE  &kp RIGHT_BRACE  &kp PIPE
+&trans    &trans    &trans    &trans    &kp LA(LG(BACKSLASH))    &trans                                    &trans   &trans   &trans    &trans    &trans    &trans
 &kp CAPSLOCK    &kp K_APPLICATION    &out OUT_BLE    &bt BT_CLR  &trans  &trans                                    &trans   &trans   &trans    &trans    &trans    &trans    
 			>;
 		};
