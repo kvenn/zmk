@@ -1,0 +1,22 @@
+
+#Copyright (c) 2020 Derek Schmell
+#SPDX-License-Identifier: MIT
+ 
+ 
+if SHIELD_TETONS_LEFT
+
+config ZMK_KEYBOARD_NAME
+	default "Tetons"
+
+endif
+
+if SHIELD_TETONS_RIGHT
+
+config ZMK_KEYBOARD_NAME
+	default "Tetons Right"
+
+endif
+
+if SHIELD_TETONS_LEFT || SHIELD_TETONS_RIGHT
+
+endif

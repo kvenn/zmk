@@ -1,0 +1,24 @@
+/*
+ * Copyright (c) 2020 Derek Schmell
+ *
+ * SPDX-License-Identifier: MIT
+ */
+ 
+#include "tetons.dtsi"
+
+&default_transform {
+	col-offset = <8>;
+};
+
+&kscan0 {
+	col-gpios
+		= <&gpio0 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+		, <&gpio0 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+		, <&gpio0 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+		, <&gpio0 12 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+		, <&gpio0 31 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+		, <&gpio0 23 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+		, <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+		, <&gpio0 21 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+		;
+};
