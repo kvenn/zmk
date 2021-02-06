@@ -8,15 +8,15 @@ if SHIELD_CREAM_LEFT
 config ZMK_KEYBOARD_NAME
 	default "Cream Left"
 
+config ZMK_SPLIT_BLE_ROLE_CENTRAL
+	default y
+
 endif
 
 if SHIELD_CREAM_RIGHT
 
 config ZMK_KEYBOARD_NAME
 	default "Cream Right"
-
-config ZMK_SPLIT_BLE_ROLE_CENTRAL
-	default y
 
 endif
 
