@@ -12,6 +12,18 @@
 
 
 / {
+	behaviors {
+        hm: homerow_mods {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOMEROW_MODS";
+            #binding-cells = <2>;
+            tapping_term_ms = <150>;
+            quick_tap_ms = <0>;
+            flavor = "tap-preferred";
+            bindings = <&kp>, <&kp>;
+        };
+    };
+
 	keymap {
 		compatible = "zmk,keymap";
 
@@ -23,11 +35,7 @@
 // | LCTL  | LGUI  | LALT |  GRAV |  | EQL | DEL | BKSP|  | RET | SPC  | LBKT |  RBKT  | LBKT | HOME  |   END |
 			bindings = <
 &kp ESCAPE  &kp Q     &kp W     &kp E     &kp R     &kp T                        &kp Y     &kp U     &kp I     &kp O     &kp P     &kp BACKSPACE
-<<<<<<< HEAD
-&kp TAB  &mt LEFT_CONTROL A     &mt LEFT_ALT S     &mt LEFT_SHIFT D     &mt LEFT_GUI F     &kp G                        &kp H     &mt RIGHT_GUI J     &mt RIGHT_SHIFT K     &mt RIGHT_ALT L     &mt RIGHT_CONTROL SEMICOLON  &kp SINGLE_QUOTE
-=======
-&kp TAB  &kp A     &kp S     &kp D     &kp F     &kp G                        &kp H     &kp J     &kp K     &kp L     &kp SEMICOLON  &kp SINGLE_QUOTE
->>>>>>> decopad
+&kp TAB  &hm LEFT_CONTROL A     &hm LEFT_ALT S     &hm LEFT_SHIFT D     &hm LEFT_GUI F     &kp G                        &kp H     &hm RIGHT_GUI J     &hm RIGHT_SHIFT K     &hm RIGHT_ALT L     &hm RIGHT_CONTROL SEMICOLON  &kp SINGLE_QUOTE
 &kp LEFT_SHIFT &kp Z     &kp X     &kp C     &kp V     &kp B                        &kp N     &kp M     &kp COMMA  &kp PERIOD   &mt LEFT_SHIFT SLASH  &kp RETURN
 &kp M_PLAY &kp LEFT_CONTROL &kp LEFT_ALT &kp LEFT_GUI  &mo 1     &kp SPACE                      &kp SPACE   &mo 2     &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT_ARROW
 			>;
