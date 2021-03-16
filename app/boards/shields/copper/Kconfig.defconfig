@@ -3,24 +3,24 @@
 #SPDX-License-Identifier: MIT
  
  
-if SHIELD_TETONS_LEFT
+if SHIELD_COPPER_LEFT
 
 config ZMK_KEYBOARD_NAME
-	default "Tetons"
+	default "Copper Left"
 
 config ZMK_SPLIT_BLE_ROLE_CENTRAL
 	default y
 
 endif
 
-if SHIELD_TETONS_RIGHT
+if SHIELD_COPPER_RIGHT
 
 config ZMK_KEYBOARD_NAME
-	default "Tetons Right"
+	default "Copper Right"
 
 endif
 
-if SHIELD_TETONS_LEFT || SHIELD_TETONS_RIGHT
+if SHIELD_COPPER_LEFT || SHIELD_COPPER_RIGHT
 
 config ZMK_SPLIT
 	default y
