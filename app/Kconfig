@@ -25,7 +25,57 @@ config USB_DEVICE_PID
 config USB_DEVICE_MANUFACTURER
 	default "ZMK Project"
 
-menu "HID Output Types"
+menu "HID"
+
+choice ZMK_HID_REPORT_TYPE
+	prompt "HID Report Type"
+
+config ZMK_HID_REPORT_TYPE_HKRO
+	bool "#-Key Roll Over (HKRO) HID Report"
+	help
+	  Enable # key roll over for HID report. This selection is "boot keyboard" compatible
+	  but limits the total number of possible keys to report as held to #.
+
+config ZMK_HID_REPORT_TYPE_NKRO
+	bool "Full N-Key Roll Over (NKRO) HID Report"
+	help
+	  Enable full N-Key Roll Over for HID output. This selection will prevent the keyboard
+	  from working with some BIOS/UEFI versions that only support "boot keyboard" support.
+	  This option also prevents using some infrequently used higher range HID usages.
+
+endchoice
+
+if ZMK_HID_REPORT_TYPE_HKRO
+
+config ZMK_HID_KEYBOARD_REPORT_SIZE
+	int "# Keyboard Keys Reportable"
+	default 6
+
+endif
+
+config ZMK_HID_CONSUMER_REPORT_SIZE
+	int "# Consumer Keys Reportable"
+	default 6
+
+
+choice ZMK_HID_CONSUMER_REPORT_USAGES
+	prompt "HID Report Type"
+
+config ZMK_HID_CONSUMER_REPORT_USAGES_FULL
+	bool "Full Consumer HID Usage Support"
+	help
+	  Enable full Consumer usage ID values to be sent to hosts. Allows for less
+	  frequently used usages, but has compatibability issues with some host OSes.
+
+config ZMK_HID_CONSUMER_REPORT_USAGES_BASIC
+	bool "Basic Consumer HID Usage Support"
+	help
+	  Enable Consumer usage ID values up to "Playback Speed - Slow" to be sent to
+	  hosts. Allows for broader compatibability with more host OSes.
+
+endchoice
+
+menu "Output Types"
 
 config ZMK_USB
 	bool "USB"
@@ -92,7 +142,10 @@ config ZMK_BLE_PASSKEY_ENTRY
 #ZMK_BLE
 endif
 
-#HID Output Types
+#Output Types
+endmenu
+
+# HID
 endmenu
 
 menu "Split Support"
@@ -263,14 +316,11 @@ config ZMK_SLEEP
 
 if ZMK_SLEEP
 
-config SYS_POWER_DEEP_SLEEP_STATES
-	default y
-
 choice SYS_PM_POLICY
-	default SYS_PM_POLICY_APP
+	default PM_POLICY_APP
 endchoice
 
-config DEVICE_POWER_MANAGEMENT
+config PM_DEVICE
 	default y
 
 config ZMK_IDLE_SLEEP_TIMEOUT
@@ -418,6 +468,14 @@ config USB
 config ZMK_WPM
 	bool "Calculate WPM"
 	default n
+
+config SENSOR
+	default y
+
+choice CBPRINTF_IMPLEMENTATION
+	default CBPRINTF_NANO
+
+endchoice
 
 module = ZMK
 module-str = zmk
