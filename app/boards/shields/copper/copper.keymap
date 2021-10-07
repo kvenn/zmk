@@ -22,6 +22,15 @@
             flavor = "tap-preferred";
             bindings = <&kp>, <&kp>;
         };
+		sm: shift_mod {
+            compatible = "zmk,behavior-hold-tap";
+            label = "SHIFT_MODS";
+            #binding-cells = <2>;
+            tapping_term_ms = <120>;
+            quick_tap_ms = <0>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+        };
 		// custom layer tap because &lt did not work very well for me
 		lm: layer_mods {
 			compatible = "zmk,behavior-hold-tap";
@@ -44,7 +53,7 @@
 // | LCTL  | LGUI  | LALT |  GRAV |  | EQL | DEL | BKSP|  | RET | SPC  | LBKT |  RBKT  | LBKT | HOME  |   END |
 			bindings = <
 &kp ESCAPE  &kp Q     &kp W     &kp E     &kp R     &kp T                        &kp Y     &kp U     &kp I     &kp O     &kp P     &kp BACKSPACE
-&kp TAB  &hm LEFT_CONTROL A     &hm LEFT_ALT S     &hm LEFT_SHIFT D     &hm LEFT_GUI F     &kp G                        &kp H     &hm RIGHT_GUI J     &hm RIGHT_SHIFT K     &hm RIGHT_ALT L     &hm RIGHT_CONTROL SEMICOLON  &kp SINGLE_QUOTE
+&kp TAB  &hm LEFT_CONTROL A     &hm LEFT_ALT S     &sm LEFT_SHIFT D     &hm LEFT_GUI F     &kp G                        &kp H     &hm RIGHT_GUI J     &sm RIGHT_SHIFT K     &hm RIGHT_ALT L     &hm RIGHT_CONTROL SEMICOLON  &kp SINGLE_QUOTE
 &kp LEFT_SHIFT &kp Z     &kp X     &kp C     &kp V     &kp B                        &kp N     &kp M     &kp COMMA  &kp PERIOD   &mt LEFT_SHIFT SLASH  &kp RETURN
 &kp C_PLAY &kp LEFT_CONTROL &kp LEFT_ALT &kp LEFT_GUI  &lm 1 LG(V)    &lt 3 SPACE                      &lt 3 SPACE   &mo 2     &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT_ARROW
 			>;
