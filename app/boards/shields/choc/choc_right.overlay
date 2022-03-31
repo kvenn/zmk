@@ -1,0 +1,22 @@
+/*
+ * Copyright (c) 2020 Derek Schmell
+ *
+ * SPDX-License-Identifier: MIT
+ */
+ 
+#include "choc.dtsi"
+
+&default_transform {
+	col-offset = <6>;
+};
+// NOTE: pin D10 used for COL2 on right side because i shorted to case
+&kscan0 {
+	col-gpios
+		= <&pro_micro_d  4 GPIO_ACTIVE_HIGH>
+		, <&pro_micro_d  10 GPIO_ACTIVE_HIGH>
+		, <&pro_micro_a  0 GPIO_ACTIVE_HIGH>
+		, <&pro_micro_d  15 GPIO_ACTIVE_HIGH>
+		, <&pro_micro_a  1 GPIO_ACTIVE_HIGH>
+		, <&pro_micro_a  2 GPIO_ACTIVE_HIGH>
+		;
+};
