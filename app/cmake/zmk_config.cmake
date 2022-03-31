@@ -61,13 +61,16 @@ foreach(root ${BOARD_ROOT})
 	if (EXISTS "${root}/boards/${BOARD}.overlay")
 		list(APPEND ZMK_DTC_FILES "${root}/boards/${BOARD}.overlay")
 	endif()
-	find_path(BOARD_DIR
-	    NAMES ${BOARD}_defconfig
-	    PATHS ${root}/boards/*/*
-	    NO_DEFAULT_PATH
-		)
-	if(BOARD_DIR)
-		list(APPEND KEYMAP_DIRS ${BOARD_DIR})
+	if (NOT DEFINED BOARD_DIR_NAME)
+		find_path(BOARD_DIR
+			NAMES ${BOARD}_defconfig
+			PATHS ${root}/boards/*/*
+			NO_DEFAULT_PATH
+			)
+		if(BOARD_DIR)
+			get_filename_component(BOARD_DIR_NAME ${BOARD_DIR} NAME)
+			list(APPEND KEYMAP_DIRS ${BOARD_DIR})
+		endif()
 	endif()
 
 	if(DEFINED SHIELD)
@@ -102,8 +105,10 @@ if (ZMK_CONFIG)
 		endif()
 
 		# TODO: Board revisions?
+		list(APPEND overlay_candidates "${ZMK_CONFIG}/${BOARD_DIR_NAME}.overlay")
 		list(APPEND overlay_candidates "${ZMK_CONFIG}/${BOARD}.overlay")
 		list(APPEND overlay_candidates "${ZMK_CONFIG}/default.overlay")
+		list(APPEND config_candidates "${ZMK_CONFIG}/${BOARD_DIR_NAME}.conf")
 		list(APPEND config_candidates "${ZMK_CONFIG}/${BOARD}.conf")
 		list(APPEND config_candidates "${ZMK_CONFIG}/default.conf")
 
@@ -130,7 +135,7 @@ endif()
 
 if(NOT KEYMAP_FILE)
 	foreach(keymap_dir ${KEYMAP_DIRS})
-		foreach(keymap_prefix ${SHIELD} ${SHIELD_DIR} ${BOARD} ${BOARD_DIR})
+		foreach(keymap_prefix ${SHIELD} ${SHIELD_DIR} ${BOARD} ${BOARD_DIR_NAME})
 			if (EXISTS ${keymap_dir}/${keymap_prefix}.keymap)
 				set(KEYMAP_FILE "${keymap_dir}/${keymap_prefix}.keymap" CACHE STRING "Selected keymap file")
 				message(STATUS "Using keymap file: ${KEYMAP_FILE}")

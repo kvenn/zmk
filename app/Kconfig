@@ -167,11 +167,20 @@ menuconfig ZMK_SPLIT_BLE_ROLE_CENTRAL
 	bool "Central"
 	select BT_CENTRAL
 	select BT_GATT_CLIENT
+	select BT_GATT_AUTO_DISCOVER_CCC
 
 if ZMK_SPLIT_BLE_ROLE_CENTRAL
 
 config ZMK_SPLIT_BLE_CENTRAL_POSITION_QUEUE_SIZE
 	int "Max number of key position state events to queue when received from peripherals"
+	default 5
+
+config ZMK_BLE_SPLIT_CENTRAL_SPLIT_RUN_STACK_SIZE
+	int "BLE split central write thread stack size"
+	default 512
+
+config ZMK_BLE_SPLIT_CENTRAL_SPLIT_RUN_QUEUE_SIZE
+	int "Max number of behavior run events to queue to send to the peripheral(s)"
 	default 5
 
 endif
@@ -209,7 +218,7 @@ endif
 endif
 
 #ZMK_SPLIT
-endif 
+endif
 
 if ZMK_BLE
 
@@ -248,7 +257,7 @@ menu "Display/LED Options"
 
 rsource "src/display/Kconfig"
 
-config ZMK_RGB_UNDERGLOW
+menuconfig ZMK_RGB_UNDERGLOW
 	bool "RGB Adressable LED Underglow"
 	select LED_STRIP
 
@@ -262,36 +271,54 @@ config ZMK_RGB_UNDERGLOW_EXT_POWER
 	bool "RGB underglow toggling also controls external power"
 	default y
 
+config ZMK_RGB_UNDERGLOW_BRT_MIN
+	int "RGB underglow minimum brightness in percent"
+	range 0 100
+	default 0
+
+config ZMK_RGB_UNDERGLOW_BRT_MAX
+	int "RGB underglow maximum brightness in percent"
+	range ZMK_RGB_UNDERGLOW_BRT_MIN 100
+	default 100
+
 config ZMK_RGB_UNDERGLOW_HUE_STEP
-	int "RGB underglow hue step in degrees of 360"
+	int "RGB underglow hue step in degrees"
+	range 0 359
 	default 10
 
 config ZMK_RGB_UNDERGLOW_SAT_STEP
-	int "RGB underglow sturation step in percent"
+	int "RGB underglow saturation step in percent"
+	range 0 100
 	default 10
 
 config ZMK_RGB_UNDERGLOW_BRT_STEP
 	int "RGB underglow brightness step in percent"
+	range 0 100
 	default 10
 
 config ZMK_RGB_UNDERGLOW_HUE_START
-	int "RGB underglow start hue value from 0-359"
+	int "RGB underglow start hue value in degrees"
+	range 0 359
 	default 0
 
 config ZMK_RGB_UNDERGLOW_SAT_START
-	int "RGB underglow start saturations value from 0-100"
+	int "RGB underglow start saturations value in percent"
+	range 0 100
 	default 100
 
 config ZMK_RGB_UNDERGLOW_BRT_START
-	int "RGB underglow start brightness value from 0-100"
-	default 100
+	int "RGB underglow start brightness value in percent"
+	range ZMK_RGB_UNDERGLOW_BRT_MIN ZMK_RGB_UNDERGLOW_BRT_MAX
+	default ZMK_RGB_UNDERGLOW_BRT_MAX
 
 config ZMK_RGB_UNDERGLOW_SPD_START
-	int "RGB underglow start animation speed value from 1-5"
+	int "RGB underglow start animation speed value"
+	range 1 5
 	default 3
 
 config ZMK_RGB_UNDERGLOW_EFF_START
 	int "RGB underglow start effect int value related to the effect enum list"
+	range 0 3
 	default 0
 
 config ZMK_RGB_UNDERGLOW_ON_START
@@ -299,6 +326,35 @@ config ZMK_RGB_UNDERGLOW_ON_START
 	default y
 
 #ZMK_RGB_UNDERGLOW
+endif
+
+menuconfig ZMK_BACKLIGHT
+	bool "LED backlight"
+	select LED
+
+if ZMK_BACKLIGHT
+
+config ZMK_BACKLIGHT_BRT_STEP
+	int "Brightness step in percent"
+	range 1 100
+	default 20
+
+config ZMK_BACKLIGHT_BRT_START
+	int "Default brightness in percent"
+	range 1 100
+	default 40
+
+config ZMK_BACKLIGHT_ON_START
+	bool "Default backlight state"
+	default y
+
+config ZMK_BACKLIGHT_AUTO_OFF_IDLE
+	bool "Turn off backlight when keyboard goes into idle state"
+
+config ZMK_BACKLIGHT_AUTO_OFF_USB
+	bool "Turn off backlight when USB is disconnected"
+
+#ZMK_BACKLIGHT
 endif
 
 #Display/LED Options
@@ -351,7 +407,15 @@ config ZMK_COMBO_MAX_KEYS_PER_COMBO
 	int "Maximum number of keys per combo"
 	default 4
 
-#Display/LED Options
+#Combo options
+endmenu
+
+menu "Behavior Options"
+
+config ZMK_BEHAVIORS_QUEUE_SIZE
+	int "Maximum number of behaviors to allow queueing from a macro or other complex behavior"
+	default 64
+
 endmenu
 
 menu "Advanced"

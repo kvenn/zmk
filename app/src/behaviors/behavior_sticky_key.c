@@ -31,6 +31,7 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 struct behavior_sticky_key_config {
     uint32_t release_after_ms;
     bool quick_release;
+    bool ignore_modifiers;
     struct zmk_behavior_binding behavior;
 };
 
@@ -187,6 +188,9 @@ static int sticky_key_keycode_state_changed_listener(const zmk_event_t *eh) {
     if (ev == NULL) {
         return ZMK_EV_EVENT_BUBBLE;
     }
+
+    // keep track whether the event has been reraised, so we only reraise it once
+    bool event_reraised = false;
     for (int i = 0; i < ZMK_BHV_STICKY_KEY_MAX_HELD; i++) {
         struct active_sticky_key *sticky_key = &active_sticky_keys[i];
         if (sticky_key->position == ZMK_BHV_STICKY_KEY_POSITION_FREE) {
@@ -201,7 +205,7 @@ static int sticky_key_keycode_state_changed_listener(const zmk_event_t *eh) {
             continue;
         }
 
-        // If events were queued, the timer event may be queued late or not at all.
+        // If this event was queued, the timer may be triggered late or not at all.
         // Release the sticky key if the timer should've run out in the meantime.
         if (sticky_key->release_at != 0 && ev->timestamp > sticky_key->release_at) {
             stop_timer(sticky_key);
@@ -210,6 +214,11 @@ static int sticky_key_keycode_state_changed_listener(const zmk_event_t *eh) {
         }
 
         if (ev->state) { // key down
+            if (sticky_key->config->ignore_modifiers && is_mod(ev->usage_page, ev->keycode)) {
+                // ignore modifier key press so we can stack sticky keys and combine with other
+                // modifiers
+                continue;
+            }
             if (sticky_key->modified_key_usage_page != 0 || sticky_key->modified_key_keycode != 0) {
                 // this sticky key is already in use for a keycode
                 continue;
@@ -217,10 +226,12 @@ static int sticky_key_keycode_state_changed_listener(const zmk_event_t *eh) {
             if (sticky_key->timer_started) {
                 stop_timer(sticky_key);
                 if (sticky_key->config->quick_release) {
-                    // continue processing the event. Release the sticky key afterwards.
-                    ZMK_EVENT_RAISE_AFTER(eh, behavior_sticky_key);
+                    // immediately release the sticky key after the key press is handled.
+                    if (!event_reraised) {
+                        ZMK_EVENT_RAISE_AFTER(eh, behavior_sticky_key);
+                        event_reraised = true;
+                    }
                     release_sticky_key_behavior(sticky_key, ev->timestamp);
-                    return ZMK_EV_EVENT_CAPTURED;
                 }
             }
             sticky_key->modified_key_usage_page = ev->usage_page;
@@ -233,6 +244,9 @@ static int sticky_key_keycode_state_changed_listener(const zmk_event_t *eh) {
                 release_sticky_key_behavior(sticky_key, ev->timestamp);
             }
         }
+    }
+    if (event_reraised) {
+        return ZMK_EV_EVENT_CAPTURED;
     }
     return ZMK_EV_EVENT_BUBBLE;
 }
@@ -270,6 +284,7 @@ static struct behavior_sticky_key_data behavior_sticky_key_data;
     static struct behavior_sticky_key_config behavior_sticky_key_config_##n = {                    \
         .behavior = ZMK_KEYMAP_EXTRACT_BINDING(0, DT_DRV_INST(n)),                                 \
         .release_after_ms = DT_INST_PROP(n, release_after_ms),                                     \
+        .ignore_modifiers = DT_INST_PROP(n, ignore_modifiers),                                     \
         .quick_release = DT_INST_PROP(n, quick_release),                                           \
     };                                                                                             \
     DEVICE_DT_INST_DEFINE(n, behavior_sticky_key_init, device_pm_control_nop,                      \
