@@ -12,6 +12,26 @@ You can also come join our [ZMK Discord Server](https://zmk.dev/community/discor
 
 To review features, check out the [feature overview](https://zmk.dev/docs/). ZMK is under active development, and new features are listed with the [enhancement label](https://github.com/zmkfirmware/zmk/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement) in GitHub. Please feel free to add 👍 to the issue description of any requests to upvote the feature.
 
+
+# Setup
+* Download docker for mac
+* download remote containers
+* Open directory in container
+* run west update (creates volumes)
+* close vscode (kills container)
+* delete the container
+* delete zmk-config (docker volume) - docker volume rm zmk-config
+* create own zmk config volume pointed at correct board (inside /app/boards/sheild/<boardname>)
+docker volume create --driver local -o o=bind -o type=none -o \
+    device="/Users/kylevenn/Development/zmk/app/boards/shields/sp64" zmk-config
+* Open vscode again and reopen in container
+* Then run build
+west build -b nice_nano -- -DSHIELD=sp64_left -DZMK_CONFIG="/workspaces/zmk-config/config"
+
+If this works, it'll output the file to `/workspaces/zmk/app/build/zephyr/zmk.uf2`
+
+
+
 ## Setup
 This repo contains the keymap and conf file for your keyboard inside `zmk/app/boards/shields/<your_keyboard>`.
 
@@ -35,7 +55,7 @@ brew install --cask gcc-arm-embedded
 ```
 # zephyr build vars
 export ZEPHYR_TOOLCHAIN_VARIANT=gnuarmemb
-export GNUARMEMB_TOOLCHAIN_PATH=/usr/local/
+export GNUARMEMB_TOOLCHAIN_PATH=$(brew --prefix)
 
 # pip
 export PATH="$HOME/.local/bin:$PATH"
@@ -53,7 +73,7 @@ west zephyr-export
 pip install --user -r zephyr/scripts/requirements-base.txt
 ```
 
-### Install zephyr sdk
+### Install zephyr sdk (Not necessary??)
 [Docs](https://docs.zephyrproject.org/latest/getting_started/index.html#install-a-toolchain)
 * NOTE: Read docs if not on m1 mac
 ```bash
@@ -62,6 +82,7 @@ wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.14.0/zeph
 wget -O - https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.14.0/sha256.sum | shasum --check --ignore-missing
 tar xvf zephyr-sdk-0.14.0_macos-aarch64.tar.gz
 rm zephyr-sdk-0.14.0_macos-aarch64.tar.gz
+# Only need to do this once
 ./zephyr-sdk-0.14.0/setup.sh
 ```
 
@@ -77,6 +98,8 @@ rm -r build/
 west build -d build/sp64/left -b nice_nano -- -DSHIELD=sp64_left
 west build -d build/sp64/right -b nice_nano -- -DSHIELD=sp64_right
 ```
+
+This will output .uf2 files -> /build/sp64/left/zephyr/zmk.uf2
 
 ## Flashing uf2 files
 [Docs](https://zmk.dev/docs/user-setup/#flashing-uf2-files)
