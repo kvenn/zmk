@@ -1,7 +1,7 @@
 {
   "files.associations": {
-    "*.overlay": "dts",
-    "*.keymap": "dts"
+    "*.css": "css",
+    "*.overlay": "dts"
   },
   "python.formatting.provider": "black"
 }

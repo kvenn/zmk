@@ -11,3 +11,88 @@ Check out the website to learn more: https://zmk.dev/
 You can also come join our [ZMK Discord Server](https://zmk.dev/community/discord/invite)
 
 To review features, check out the [feature overview](https://zmk.dev/docs/). ZMK is under active development, and new features are listed with the [enhancement label](https://github.com/zmkfirmware/zmk/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement) in GitHub. Please feel free to add 👍 to the issue description of any requests to upvote the feature.
+
+## Setup
+This repo contains the keymap and conf file for your keyboard inside `zmk/app/boards/shields/<your_keyboard>`.
+
+Fork this repo to begin keymap modifications.
+
+## Setup west
+`west` is the pip extension for building your uf2 file to be flashed to the keyboard
+
+### Installation
+[Docs](https://zmk.dev/docs/development/setup/#prerequisites)
+* Run all these
+```bash
+asdf plugin-add python
+asdf install # asdf install python 3.10.4
+brew install cmake ninja ccache dtc git wget dfu-util
+asdf reshim python
+pip install --user -U west
+brew install --cask gcc-arm-embedded
+```
+* Add the following to your zshrc
+```
+# zephyr build vars
+export ZEPHYR_TOOLCHAIN_VARIANT=gnuarmemb
+export GNUARMEMB_TOOLCHAIN_PATH=/usr/local/
+
+# pip
+export PATH="$HOME/.local/bin:$PATH"
+``` 
+* Then run `asdf reshim python` one last time
+* Confirm it worked with `python -m pip show west`
+
+### Init west
+[Docs](https://zmk.dev/docs/development/setup/#initialize-west)
+
+```bash
+west init -l app/
+west update
+west zephyr-export
+pip install --user -r zephyr/scripts/requirements-base.txt
+```
+
+### Install zephyr sdk
+[Docs](https://docs.zephyrproject.org/latest/getting_started/index.html#install-a-toolchain)
+* NOTE: Read docs if not on m1 mac
+```bash
+cd ~
+wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.14.0/zephyr-sdk-0.14.0_macos-aarch64.tar.gz
+wget -O - https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.14.0/sha256.sum | shasum --check --ignore-missing
+tar xvf zephyr-sdk-0.14.0_macos-aarch64.tar.gz
+rm zephyr-sdk-0.14.0_macos-aarch64.tar.gz
+./zephyr-sdk-0.14.0/setup.sh
+```
+
+## Modifying keymap
+* 
+
+## Building
+[Docs](https://zmk.dev/docs/development/build-flash/#building-for-split-keyboards)
+```bash
+cd app
+## nuke build folder
+rm -r build/
+west build -d build/sp64/left -b nice_nano -- -DSHIELD=sp64_left
+west build -d build/sp64/right -b nice_nano -- -DSHIELD=sp64_right
+```
+
+## Flashing uf2 files
+[Docs](https://zmk.dev/docs/user-setup/#flashing-uf2-files)
+[Docs](https://zmk.dev/docs/development/build-flash/#flashing)
+[Docs](https://zmk.dev/docs/customization#flashing-your-changes)
+
+> For split keyboards, only the central (left) side will need to be reflashed if you are just updating your keymap.
+
+* First put your board into bootloader mode by double clicking the reset button (either on the MCU board itself, or the one that is part of your keyboard). 
+* The controller should appear in your OS as a new USB storage device.
+* Copy the correct UF2 file (e.g. left or right if working on a split), and paste it onto the root of that USB mass storage device. 
+   * Should be called NICENANO
+* Once the flash is complete, the controller should automatically restart, and load your newly flashed firmware.
+   * It will unmount when it finishes copying
+   * Ignore warning that you need to eject before unmounting.  It will always do that.
+
+## Connecting split halves
+https://zmk.dev/docs/user-setup/#connecting-split-keyboard-halves
+For split keyboards, after flashing each half individually you can connect them together by resetting them at the same time. Within a few seconds of resetting, both halves should automatically connect to each other.
