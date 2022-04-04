@@ -12,12 +12,12 @@ You can also come join our [ZMK Discord Server](https://zmk.dev/community/discor
 To review features, check out the [feature overview](https://zmk.dev/docs/). ZMK is under active development, and new features are listed with the [enhancement label](https://github.com/zmkfirmware/zmk/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement) in GitHub. Please feel free to add 👍 to the issue description of any requests to upvote the feature.
 
 
-# Setup
+## Setup
 This repo contains the keymap and conf file for your keyboard inside `zmk/app/boards/shields/<your_keyboard>`.
 
 Fork this repo to begin keymap modifications.
 
-## Steps
+### Steps
 You're going to run the build of this repo in a Docker instance that's configured with python, west, and a bunch of other gnarly stuff.
 You're going to create a volume called `zmk-config` that this Docker knows to look for that will have a link to the board you want build.
 
@@ -40,7 +40,7 @@ You're going to create a volume called `zmk-config` that this Docker knows to lo
 1. Open VSCode again and reopen the directory in a container (command palette)
 1. Install the ZMK extension for VSCode (gets syntax highlighting)
 
-# Editing keymap
+## Editing keymap
 [Full list of codes](https://zmk.dev/docs/codes/)
 
 * Open up the keymap for your board located at `zmk/app/boards/sheild/<your_keyboard>/<keyboard>.keymap`
@@ -59,7 +59,7 @@ Layers are represented by numbers. Here is a standard config. So if you see &mo 
 #define RAISE   2
 ```
 
-# Building and deploying
+## Building and deploying
 You'll generate a .uf2 file that you'll flash to the keyboard. You only need to flash left for a split that's already set up.
 
 Inside the VSCode terminal, build the left side with
@@ -69,7 +69,7 @@ And right side with:
 
 If this works, it'll output the file to `/workspaces/zmk/app/build/zephyr/zmk.uf2`
 
-# Flashing 
+## Flashing 
 [Docs](https://zmk.dev/docs/user-setup/#flashing-uf2-files)
 [Docs](https://zmk.dev/docs/development/build-flash/#flashing)
 [Docs](https://zmk.dev/docs/customization#flashing-your-changes)
@@ -84,10 +84,11 @@ If this works, it'll output the file to `/workspaces/zmk/app/build/zephyr/zmk.uf
    * It will unmount when it finishes copying
    * Ignore warning that you need to eject before unmounting.  It will always do that.
 
-# Connecting split halves
+## Connecting split halves
 https://zmk.dev/docs/user-setup/#connecting-split-keyboard-halves
 For split keyboards, after flashing each half individually you can connect them together by resetting them at the same time. Within a few seconds of resetting, both halves should automatically connect to each other.
 
+-----------
 
 # Manual setup (if you didn't do docker above)
 Warning, this doesn't work on M1 Macs
@@ -128,22 +129,6 @@ west zephyr-export
 pip install --user -r zephyr/scripts/requirements-base.txt
 ```
 
-### Install zephyr sdk (Not necessary??)
-[Docs](https://docs.zephyrproject.org/latest/getting_started/index.html#install-a-toolchain)
-* NOTE: Read docs if not on m1 mac
-```bash
-cd ~
-wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.14.0/zephyr-sdk-0.14.0_macos-aarch64.tar.gz
-wget -O - https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.14.0/sha256.sum | shasum --check --ignore-missing
-tar xvf zephyr-sdk-0.14.0_macos-aarch64.tar.gz
-rm zephyr-sdk-0.14.0_macos-aarch64.tar.gz
-# Only need to do this once
-./zephyr-sdk-0.14.0/setup.sh
-```
-
-## Modifying keymap
-* 
-
 ## Building
 [Docs](https://zmk.dev/docs/development/build-flash/#building-for-split-keyboards)
 ```bash
@@ -155,4 +140,3 @@ west build -d build/sp64/right -b nice_nano -- -DSHIELD=sp64_right
 ```
 
 This will output .uf2 files -> /build/sp64/left/zephyr/zmk.uf2
-
