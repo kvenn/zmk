@@ -64,6 +64,7 @@ You'll generate a .uf2 file that you'll flash to the keyboard. You only need to 
 
 Inside the VSCode terminal, build the left side with
 ```bash
+# Uses the zmk-config device variable you set above
 west build -b nice_nano -- -DSHIELD=sp64_left -DZMK_CONFIG="/workspaces/zmk-config/config"
 ```
 And right side with:
