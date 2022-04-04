@@ -63,9 +63,13 @@ Layers are represented by numbers. Here is a standard config. So if you see &mo 
 You'll generate a .uf2 file that you'll flash to the keyboard. You only need to flash left for a split that's already set up.
 
 Inside the VSCode terminal, build the left side with
-```west build -b nice_nano -- -DSHIELD=sp64_left -DZMK_CONFIG="/workspaces/zmk-config/config"```
+```bash
+west build -b nice_nano -- -DSHIELD=sp64_left -DZMK_CONFIG="/workspaces/zmk-config/config"
+```
 And right side with:
-```west build -b nice_n ano -- -DSHIELD=sp64_right -DZMK_CONFIG="/workspaces/zmk-config/config"```
+```bash 
+west build -b nice_n ano -- -DSHIELD=sp64_right -DZMK_CONFIG="/workspaces/zmk-config/config"
+```
 
 If this works, it'll output the file to `/workspaces/zmk/app/build/zephyr/zmk.uf2`
 
