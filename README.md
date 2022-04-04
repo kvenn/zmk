@@ -19,6 +19,7 @@ Fork this repo to begin keymap modifications.
 
 ### Steps
 You're going to run the build of this repo in a Docker instance that's configured with python, west, and a bunch of other gnarly stuff.
+
 You're going to create a volume called `zmk-config` that this Docker knows to look for that will have a link to the board you want build.
 
 1. Install [Docker for Mac](https://docs.docker.com/desktop/mac/install/)
@@ -75,9 +76,9 @@ west build -b nice_n ano -- -DSHIELD=sp64_right -DZMK_CONFIG="/workspaces/zmk-co
 If this works, it'll output the file to `/workspaces/zmk/app/build/zephyr/zmk.uf2`
 
 ## Flashing 
-[Docs](https://zmk.dev/docs/user-setup/#flashing-uf2-files)
-[Docs](https://zmk.dev/docs/development/build-flash/#flashing)
-[Docs](https://zmk.dev/docs/customization#flashing-your-changes)
+* [Docs](https://zmk.dev/docs/user-setup/#flashing-uf2-files)
+* [Docs](https://zmk.dev/docs/development/build-flash/#flashing)
+* [Docs](https://zmk.dev/docs/customization#flashing-your-changes)
 
 > For split keyboards, only the central (left) side will need to be reflashed if you are just updating your keymap.
 
