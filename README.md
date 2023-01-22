@@ -53,7 +53,7 @@ You're going to create a volume called `zmk-config` that this Docker knows to lo
 * mo = momentary layer (only activates layers while pressed)
 
 ### Layers
-Layers are represented by numbers. Here is a standard config. So if you see &mo 1, that means pressing that key toggles the lower layer.
+Layers are represented by numbers. Here is a standard config. So if you see &mo 1, that means pressing that key toggles the lower layer. Lower and raise are just names. Nothing special about them
 ```
 #define DEFAULT 0
 #define LOWER   1
